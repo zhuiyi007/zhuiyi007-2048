@@ -7,39 +7,52 @@
 //
 
 #import "AppDelegate.h"
+#import "ViewController.h"
+#import "ZSAccountTool.h"
 
 @interface AppDelegate ()
+
+@property (nonatomic, strong) ViewController *vc;
 
 @end
 
 @implementation AppDelegate
 
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    // 新建窗口
+    self.window = [[UIWindow alloc] init];
+    // 设置frame
+    self.window.frame = [UIScreen mainScreen].bounds;
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    
+    ViewController *vc = [storyboard instantiateInitialViewController];
+    self.vc = vc;
+    
+    [self.window setRootViewController:vc];
+    
+    // 设置主窗口
+    [self.window makeKeyAndVisible];
     return YES;
 }
 
-- (void)applicationWillResignActive:(UIApplication *)application {
-    // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-    // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+
+- (void)applicationWillResignActive:(UIApplication *)application
+{
+    if (self.vc.dismiss) {
+        self.vc.dismiss();
+    }
+    NSLog(@"应用程序将要进入非活动状态，即将进入后台");
 }
 
-- (void)applicationDidEnterBackground:(UIApplication *)application {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+-(void)applicationDidReceiveMemoryWarning:(UIApplication *)application
+{
+    NSLog(@"系统内存不足，需要进行清理工作");
 }
 
-- (void)applicationWillEnterForeground:(UIApplication *)application {
-    // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-}
-
-- (void)applicationDidBecomeActive:(UIApplication *)application {
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-}
-
-- (void)applicationWillTerminate:(UIApplication *)application {
-    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+- (void)applicationWillTerminate:(UIApplication *)application
+{
+    NSLog(@"应用程序将要退出，通常用于保存书架喝一些推出前的清理工作");
 }
 
 @end

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3C3B9EB51A4056CB002E3B2E /* ZSAccountTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C3B9EB41A4056CB002E3B2E /* ZSAccountTool.m */; };
 		52F130A81A20121900398A80 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 52F130A71A20121900398A80 /* main.m */; };
 		52F130AB1A20121900398A80 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 52F130AA1A20121900398A80 /* AppDelegate.m */; };
 		52F130AE1A20121900398A80 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52F130AD1A20121900398A80 /* ViewController.m */; };
@@ -29,6 +30,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3C3B9EB31A4056CB002E3B2E /* ZSAccountTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSAccountTool.h; sourceTree = "<group>"; };
+		3C3B9EB41A4056CB002E3B2E /* ZSAccountTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSAccountTool.m; sourceTree = "<group>"; };
 		52F130A21A20121900398A80 /* 2048.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = 2048.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		52F130A61A20121900398A80 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		52F130A71A20121900398A80 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -97,6 +100,8 @@
 				52F130A51A20121900398A80 /* Supporting Files */,
 				52F130CD1A20355E00398A80 /* ZSButton.h */,
 				52F130CE1A20355E00398A80 /* ZSButton.m */,
+				3C3B9EB31A4056CB002E3B2E /* ZSAccountTool.h */,
+				3C3B9EB41A4056CB002E3B2E /* ZSAccountTool.m */,
 			);
 			path = 2048;
 			sourceTree = "<group>";
@@ -231,6 +236,7 @@
 				52F130AE1A20121900398A80 /* ViewController.m in Sources */,
 				52F130AB1A20121900398A80 /* AppDelegate.m in Sources */,
 				52F130CF1A20355E00398A80 /* ZSButton.m in Sources */,
+				3C3B9EB51A4056CB002E3B2E /* ZSAccountTool.m in Sources */,
 				52F130A81A20121900398A80 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -422,6 +428,7 @@
 				52F130C71A20121900398A80 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		52F130C81A20121900398A80 /* Build configuration list for PBXNativeTarget "2048Tests" */ = {
 			isa = XCConfigurationList;
@@ -430,6 +437,7 @@
 				52F130CA1A20121900398A80 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -7,9 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+@protocol viewControllerDelegate <NSObject>
+
+- (void)viewController:(UIViewController *)vc dataArray:(NSArray *)array;
+
+@end
 
 @interface ViewController : UIViewController
+@property (nonatomic, strong) NSMutableArray *array;
 
+@property (nonatomic, copy) void(^dismiss)();
 
 @end
 

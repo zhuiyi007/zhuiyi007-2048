@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "ZSButton.h"
+#import "ZSAccountTool.h"
 #define space  8
 #define height 59
 #define width 59
@@ -28,7 +29,6 @@ typedef enum{
 @property (weak, nonatomic) IBOutlet UIButton *restart;
 @property (weak, nonatomic) IBOutlet UILabel *gameOverLabel;
 
-@property (nonatomic, strong) NSMutableArray *array;
 @property (nonatomic, strong) NSMutableArray *array_1;
 @property (nonatomic, strong) NSMutableArray *array_2;
 @property (nonatomic, strong) NSMutableArray *array_3;
@@ -46,14 +46,42 @@ typedef enum{
 
 @property (nonatomic, assign) ZSDirection direction;
 
-@end
 
+
+@end
 @implementation ViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // 开始时随机出两个button
-    [self start];
+    NSMutableArray *tempArray = [ZSAccountTool readArray];
+    if (tempArray.count)
+    {
+        self.array = tempArray;
+        self.score = [[ZSAccountTool readScore] intValue];
+        self.scoreLabel.text = [NSString stringWithFormat:@"%d",self.score];
+        for (int i = 0; i < 4; i ++)
+        {
+            for (NSObject *obj in self.array[i])
+            {
+                if ([obj isKindOfClass:[ZSButton class]])
+                {
+                    [self.bgView addSubview:(ZSButton *)obj];
+                }
+            }
+        }
+        NSLog(@"%@",_array);
+    }
+    else
+    {
+        self.score = 0;
+        // 开始时随机出两个button
+        [self start];
+    }
+    __weak ViewController *vc = self;
+    self.dismiss = ^(){
+        [ZSAccountTool saveArray:vc.array];
+        [ZSAccountTool saveScore:@(vc.score)];
+    };
 }
 
 #pragma mark - 懒加载
@@ -80,10 +108,11 @@ typedef enum{
     self.restart.hidden = YES;
     self.gameOverLabel.hidden = YES;
     self.array = nil;
+    self.score = 0;
     for (UIButton *btn in self.bgView.subviews) {
         [btn removeFromSuperview];
     }
-    self.scoreLabel.text = [NSString stringWithFormat:@"%d",0];
+    self.scoreLabel.text = [NSString stringWithFormat:@"%d",self.score];
     int i = 0;
     while (i != 2) {
         [self random];
@@ -107,15 +136,30 @@ typedef enum{
     while (1) {
         int row = arc4random_uniform(4);
         int col = arc4random_uniform(4);
+        int random = arc4random_uniform(2);
         if ([self.array[row][col] isEqual: @(0)])
         {
-            ZSButton *btn = [ZSButton createButtonWithNum:2];
-            [btn setFrame:CGRectMake(space + (width + space) * col, space + (height + space) * row, 0, 0)];
-            [UIView animateWithDuration:0.25 animations:^{
-                [btn setFrame:CGRectMake(space + (width + space) * col, space + (height + space) * row, width, height)];
-            }];
-            self.array[row][col] = btn;
-            [self.bgView addSubview:btn];
+            
+            if (random)
+            {
+                ZSButton *btn = [ZSButton createButtonWithNum:4];
+                [btn setFrame:CGRectMake(space + (width + space) * col, space + (height + space) * row, 0, 0)];
+                [UIView animateWithDuration:0.25 animations:^{
+                    [btn setFrame:CGRectMake(space + (width + space) * col, space + (height + space) * row, width, height)];
+                }];
+                self.array[row][col] = btn;
+                [self.bgView addSubview:btn];
+            }
+            else
+            {
+                ZSButton *btn = [ZSButton createButtonWithNum:2];
+                [btn setFrame:CGRectMake(space + (width + space) * col, space + (height + space) * row, 0, 0)];
+                [UIView animateWithDuration:0.25 animations:^{
+                    [btn setFrame:CGRectMake(space + (width + space) * col, space + (height + space) * row, width, height)];
+                }];
+                self.array[row][col] = btn;
+                [self.bgView addSubview:btn];
+            }
             break;
         }
     }
@@ -138,7 +182,7 @@ typedef enum{
     int localRow, localCol;
     if (fabs(offsetX) > fabs(offsetY))// 横向滑动 X
     {
-        if (offsetX > 0)// 往右滑
+        if (offsetX > 50)// 往右滑
         {
             _direction = ZSDirectionRight;
             // 从上往下遍历每一行
@@ -179,7 +223,7 @@ typedef enum{
                 [self random];
             }
         }
-        else // 往左滑
+        else if (offsetX < -50) // 往左滑
         {
             _direction = ZSDirectionLeft;
             // 从上往下遍历每一行
@@ -222,7 +266,7 @@ typedef enum{
     }
     else // 纵向滑动 Y
     {
-        if (offsetY > 0)// 往下滑
+        if (offsetY > 50)// 往下滑
         {
             _direction = ZSDirectionDown;
             // 从左往右遍历每一列
@@ -262,7 +306,7 @@ typedef enum{
                 [self random];
             }
         }
-        else // 往上滑
+        else if (offsetY < -50) // 往上滑
         {
             _direction = ZSDirectionUp;
             // 从左往右遍历每一列
